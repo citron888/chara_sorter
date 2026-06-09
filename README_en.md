@@ -72,6 +72,15 @@ Future AI results are automatically sorted to match your past input order (can b
 
 ---
 
+## Notes
+
+### Automatic Duplicate Deletion
+If a file with an **identical MD5 hash** already exists in the destination folder, the source file is automatically sent to the **Recycle Bin**.  
+This typically happens when you try to move the same image twice. The file can be restored from the Recycle Bin.  
+This behavior can be disabled by turning off **Duplicate Check** in settings.
+
+---
+
 ## Settings File
 
 Settings are saved to `sort_ui_config.json` in the same folder as the exe.  
