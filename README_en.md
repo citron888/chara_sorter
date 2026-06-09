@@ -57,10 +57,10 @@ The artist name is shown in the status bar.
 
 Without an API key the app works anonymously but with stricter rate limits.
 
-### Character Order Learning
+### Auto-sorting of Character Candidates
 
-As you move files, the app learns the order you prefer for each character.  
-Future AI results are automatically sorted to match your past input order (can be disabled in settings).
+The app records the order in which you enter character names and re-sorts AI recognition candidates to match your past input order.  
+The AI model itself is not retrained (can be disabled in settings).
 
 ### File Naming
 
