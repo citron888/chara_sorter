@@ -1786,6 +1786,9 @@ class _OpsMixin:
         self._last_move_dest = dest   # 類似整列で使う
         self.history.append(("move", dest, src))
         self._update_char_order(names)
+        self.images.pop(self.index)
+        if self.index >= len(self.images):
+            self.index = max(0, len(self.images) - 1)
         self.folders = get_folders(self.image_dir, self.source_dir, self._exclude_folders())
         self.show_image()
 
