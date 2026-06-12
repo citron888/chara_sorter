@@ -351,6 +351,41 @@ class TestMoveSameFolder:
         remaining = list(dest_dir.glob("almond_eye_*.png"))
         assert len(remaining) >= 1, "ファイルが削除された（バグ再現）"
 
+    def test_move_removes_from_image_list(self, tmp_path):
+        """move() 後に images リストからソースが除去されること（No such file バグ回帰）"""
+        import types
+        src = tmp_path / "char_001.png"
+        Image.new("RGB", (64, 64)).save(src)
+
+        app = self._make_app(tmp_path)
+        app.char_entries = [types.SimpleNamespace(get=lambda: "char")]
+        app.images = [src]
+        app.index  = 0
+
+        app.move()
+
+        assert src not in app.images, "移動済みファイルがリストに残っている（バグ再現）"
+        assert app.index <= len(app.images)
+
+    def test_move_advances_to_next(self, tmp_path):
+        """2枚あるとき move() 後に index が範囲内に収まること"""
+        import types
+        src1 = tmp_path / "char_001.png"
+        src2 = tmp_path / "char_002.png"
+        Image.new("RGB", (64, 64)).save(src1)
+        Image.new("RGB", (64, 64)).save(src2)
+
+        app = self._make_app(tmp_path)
+        app.char_entries = [types.SimpleNamespace(get=lambda: "char")]
+        app.images = [src1, src2]
+        app.index  = 0
+
+        app.move()
+
+        assert len(app.images) == 1
+        assert app.images[0] == src2
+        assert app.index == 0
+
 
 # ══════════════════════════════════════════════════════
 #  dHash 類似判定の閾値・偽陽性 回帰テスト
